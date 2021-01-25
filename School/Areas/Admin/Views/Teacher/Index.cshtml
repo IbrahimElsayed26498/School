@@ -1,0 +1,100 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Index</h2>
+<div id="alert"></div>
+
+<div id="teacher-form">
+    @Html.Action("AddTeacherForm")
+</div>
+<br />
+<hr style="width:50%;text-align:left;margin-left:0">
+<br />
+<div id="subject-form">
+    @Html.Action("AddSubjectForm")
+</div>
+<hr style="width:50%;text-align:left;margin-left:0">
+<br />
+<div id="student-form">
+    @Html.Action("AddStudentForm")
+</div>
+<hr style="width:50%;text-align:left;margin-left:0">
+<br />
+<div id="student-subject-form">
+    @Html.Action("AddStudentSubjectForm")
+</div>
+<div>
+    <a href="#subjects">Subjects</a>
+</div>
+<div id="data-table">
+    @Html.Action("Details")
+</div>
+<div id="subjects">
+    @Html.Action("SubjectsDetails")
+</div>
+<script>
+    function onSuccess(data) {
+        if (data.done) {
+            loadData();
+            subjectForm();
+            teacherForm();
+            studentForm();
+            studentSubjectForm();
+            var message = '<p class="alert alert-success">' + data.message + '</p>';
+            $('#alert').html(message);
+        }
+    }
+    function onFailure(data) {
+
+    }
+
+    function loadData() {
+        $.ajax({
+            url: "/admin/teacher/Details",
+            type: "Get"
+        }).done(function (data) {
+            $("#data-table").html(data)
+        }).fail(function (data) {
+        });
+    }
+
+    function teacherForm() {
+        $.ajax({
+            url: "/Admin/teacher/AddTeacherForm",
+            type: "Get"
+        }).done(function (data) {
+            $("#teacher-form").html(data);
+        }).fail(function (data) {
+        });
+    }
+    function studentForm() {
+        $.ajax({
+            url: "/Admin/teacher/AddStudentForm",
+            type: "Get"
+        }).done(function (data) {
+            $("#student-form").html(data);
+        }).fail(function (data) {
+        });
+    }
+    function studentSubjectForm() {
+        $.ajax({
+            url: "/Admin/teacher/AddStudentSubjectForm",
+            type: "Get"
+        }).done(function (data) {
+            $("#student-subject-form").html(data);
+        }).fail(function (data) {
+        });
+    }
+    function subjectForm() {
+        $.ajax({
+            url: "/Admin/teacher/AddSubjectForm",
+            type: "Get"
+        }).done(function (data) {
+            $("#subject-form").html(data);
+        }).fail(function (data) {
+        });
+    }
+</script>

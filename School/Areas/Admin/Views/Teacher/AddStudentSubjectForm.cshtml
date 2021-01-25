@@ -1,0 +1,36 @@
+﻿@model School.ViewModel.StudentSubjectVM
+@{
+    string formName = ViewBag.FormName = "AddStudentSubjectForm";
+}
+@using (Ajax.BeginForm(formName,
+   new AjaxOptions { OnSuccess = "onSuccess", OnFailure = "onFailure" }))
+{
+    <div class="form-group col-md-4 col-sm-4 col-xs-12">
+        @Html.LabelFor(z => z.StudentFK, new { @class = "form-label" })
+        @Html.DropDownListFor(z => z.StudentFK,
+                     new SelectList(new School.DAL.StudentsDAL().GetAll(),
+                     "ID", "Name"),
+                     new { @class = "form-control" })
+        @Html.ValidationMessageFor(z => z.StudentFK)
+    </div>
+    <div class="form-group col-md-4 col-sm-4 col-xs-12">
+        @Html.LabelFor(z => z.SubjectFK, new { @class = "form-label" })
+        @Html.DropDownListFor(z => z.SubjectFK,
+                     new SelectList(new School.DAL.SubjectsDAL().GetAll(),
+                     "ID", "Name"),
+                     new { @class = "form-control" })
+        @Html.ValidationMessageFor(z => z.SubjectFK)
+    </div>
+    if (formName == "PostEdit")
+    {
+        @Html.HiddenFor(z => z.ID)
+
+        <button class="btn btn-primary" type="submit">Edit</button>
+    }
+    else if (formName == "AddStudentSubjectForm")
+    {
+        <button class="btn btn-success" type="submit">Save</button>
+        <button class="btn btn-danger" type="reset">Clear</button>
+    }
+
+}

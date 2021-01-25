@@ -1,0 +1,52 @@
+﻿@model List<School.DAL.TeacherStudnetsSubjects>
+@if (Model.Any())
+{
+    <table class="table table-striped">
+        <caption style="text-align:center;">Teachers, Students and Subjects</caption>
+        <thead>
+            <tr>
+                <th>Teacher</th>
+                <th>Students and Scubjects</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.teacher.Name</td>
+                    <td>
+                        @foreach (var its in item.studentSubjects)
+                        {
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Studnet</th>
+                                        <th>Subjects</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th>@its.Student.Name</th>
+                                        <th>
+                                            <ul>
+                                                @foreach (var i in its.Subjects)
+                                                {
+                                                    <li>@i.Name</li>
+                                                }
+                                            </ul>
+                                        </th>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        }
+                    </td>
+                    <td>
+                        <button class="btn btn-primary" onclick="editTeacher(@item.teacher.ID)">Edit</button>
+                        <button class="btn btn-danger" onclick="DeleteTeacher(@item.teacher.ID)">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

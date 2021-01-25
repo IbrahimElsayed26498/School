@@ -1,0 +1,25 @@
+﻿@model List<School.Models.Subject>
+
+@if (Model.Any())
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Subject Name</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>
+                        <button class="btn btn-primary" onclick="editSubject(@item.ID)">Edit</button>
+                        <button class="btn btn-danger" onclick="DeleteSubject(@item.ID)">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

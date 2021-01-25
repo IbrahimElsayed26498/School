@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SchoolDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="SchoolDBEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Students" EntityType="SchoolDBModel.Student" />
+    <EntitySet Name="StudentSubjects" EntityType="SchoolDBModel.StudentSubject" />
+    <EntitySet Name="Subjects" EntityType="SchoolDBModel.Subject" />
+    <EntitySet Name="Teachers" EntityType="SchoolDBModel.Teacher" />
+    <AssociationSet Name="FK_Students_Teachers" Association="SchoolDBModel.FK_Students_Teachers">
+      <End Role="Teacher" EntitySet="Teachers" />
+      <End Role="Student" EntitySet="Students" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StudentSubject_Students" Association="SchoolDBModel.FK_StudentSubject_Students">
+      <End Role="Student" EntitySet="Students" />
+      <End Role="StudentSubject" EntitySet="StudentSubjects" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StudentSubject_Subjects" Association="SchoolDBModel.FK_StudentSubject_Subjects">
+      <End Role="Subject" EntitySet="Subjects" />
+      <End Role="StudentSubject" EntitySet="StudentSubjects" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Student">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="TeacherFK" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Teacher" Relationship="SchoolDBModel.FK_Students_Teachers" FromRole="Student" ToRole="Teacher" />
+    <NavigationProperty Name="StudentSubjects" Relationship="SchoolDBModel.FK_StudentSubject_Students" FromRole="Student" ToRole="StudentSubject" />
+  </EntityType>
+  <EntityType Name="StudentSubject">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="StudentFK" Type="Int32" Nullable="false" />
+    <Property Name="SubjectFK" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Student" Relationship="SchoolDBModel.FK_StudentSubject_Students" FromRole="StudentSubject" ToRole="Student" />
+    <NavigationProperty Name="Subject" Relationship="SchoolDBModel.FK_StudentSubject_Subjects" FromRole="StudentSubject" ToRole="Subject" />
+  </EntityType>
+  <EntityType Name="Subject">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="StudentSubjects" Relationship="SchoolDBModel.FK_StudentSubject_Subjects" FromRole="Subject" ToRole="StudentSubject" />
+  </EntityType>
+  <EntityType Name="Teacher">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Students" Relationship="SchoolDBModel.FK_Students_Teachers" FromRole="Teacher" ToRole="Student" />
+  </EntityType>
+  <Association Name="FK_Students_Teachers">
+    <End Type="SchoolDBModel.Teacher" Role="Teacher" Multiplicity="1" />
+    <End Type="SchoolDBModel.Student" Role="Student" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Teacher">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Student">
+        <PropertyRef Name="TeacherFK" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StudentSubject_Students">
+    <End Type="SchoolDBModel.Student" Role="Student" Multiplicity="1" />
+    <End Type="SchoolDBModel.StudentSubject" Role="StudentSubject" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Student">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="StudentSubject">
+        <PropertyRef Name="StudentFK" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StudentSubject_Subjects">
+    <End Type="SchoolDBModel.Subject" Role="Subject" Multiplicity="1" />
+    <End Type="SchoolDBModel.StudentSubject" Role="StudentSubject" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Subject">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="StudentSubject">
+        <PropertyRef Name="SubjectFK" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
