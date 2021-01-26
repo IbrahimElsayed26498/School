@@ -9,6 +9,10 @@ namespace School.DAL
     public class StudentsDAL
     {
         SchoolDBEntities _db = new SchoolDBEntities();
+        public StudentsDAL()
+        {
+            _db.Configuration.ProxyCreationEnabled = false;
+        }
         public bool Add(Student student, out string message)
         {
             try

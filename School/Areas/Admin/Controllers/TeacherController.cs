@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using School.Models;
 using School.ViewModel;
 using System.Web.Mvc;
@@ -11,8 +9,6 @@ namespace School.Areas.Admin.Controllers
     public class TeacherController : Controller
     {
         TeacherDAL _teacherDAL = new TeacherDAL();
-        SubjectsDAL _subjectDAL = new SubjectsDAL();
-        StudentsDAL _studentDAL = new StudentsDAL();
         StudentSubjectDAL _stdSubDAL = new StudentSubjectDAL();
 
         // GET: Admin/Teacher
@@ -31,11 +27,7 @@ namespace School.Areas.Admin.Controllers
             }
             return PartialView(tss);
         }
-        [HttpGet]
-        public PartialViewResult SubjectsDetails()
-        {
-            return PartialView(_subjectDAL.GetAll());
-        }
+        
         [HttpGet]
         public PartialViewResult AddTeacherForm()
         {
@@ -61,77 +53,7 @@ namespace School.Areas.Admin.Controllers
                 },
                 JsonRequestBehavior.AllowGet);
         }
-        [HttpGet]
-        public PartialViewResult AddSubjectForm()
-        {
-            return PartialView();
-        }
-        [HttpPost]
-        public JsonResult AddSubjectForm(SubjectsVM subjectsVM)
-        {
-            string message;
-
-            // map subjectVM object to subject object 
-            var subject = new Subject()
-            {
-                Name = subjectsVM.Name
-            };
-
-            return Json(new { done = _subjectDAL.Add(subject, out message),
-                    message,
-                formName = $"{nameof(Subject)}"
-            },
-                JsonRequestBehavior.AllowGet);
-        }
-        [HttpGet]
-        public PartialViewResult AddStudentForm()
-        {
-            return PartialView();
-        }
-        [HttpPost]
-        public JsonResult AddStudentForm(StudentsVM studentVM)
-        {
-            string message;
-
-            // map subjectVM object to subject object 
-            var student = new Student()
-            {
-                Name = studentVM.Name,
-                TeacherFK = studentVM.TeacherFK
-            };
-
-            return Json(new
-            {
-                done = _studentDAL.Add(student, out message),
-                message,
-                formName = $"{nameof(Student)}"
-            },
-                JsonRequestBehavior.AllowGet);
-        }
-        [HttpGet]
-        public PartialViewResult AddStudentSubjectForm()
-        {
-            return PartialView();
-        }
-        [HttpPost]
-        public JsonResult AddStudentSubjectForm(StudentSubjectVM stdSubVM)
-        {
-            string message;
-
-            // map subjectVM object to subject object 
-            var stdSub = new StudentSubject()
-            {
-                StudentFK = stdSubVM.StudentFK,
-                SubjectFK = stdSubVM.StudentFK
-            };
-
-            return Json(new
-            {
-                done = _stdSubDAL.Add(stdSub, out message),
-                message,
-                formName = $"{nameof(StudentSubject)}"
-            },
-                JsonRequestBehavior.AllowGet);
-        }
+        
+        
     }
 }

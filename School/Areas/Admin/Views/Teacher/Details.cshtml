@@ -32,7 +32,11 @@
                                             <ul>
                                                 @foreach (var i in its.Subjects)
                                                 {
-                                                    <li>@i.Name</li>
+                                                    <li>
+                                                        @i.Name
+                                                        <button class="btn btn-danger" onclick="del(@its.Student.ID, @i.ID)">D</button>
+                                                        <button class="btn btn-info" onclick="edit(@its.Student.ID, @i.ID)">E</button>
+                                                    </li>
                                                 }
                                             </ul>
                                         </th>
@@ -50,3 +54,21 @@
         </tbody>
     </table>
 }
+<script>
+    function del(stdID, subID) {
+        $.ajax({
+            url: "/Admin/Teacher/DeleteStudnetSubject",
+            type: "Get",
+            data: {
+                id: id
+            }
+        }).done(function (data) {
+            LoadData();
+        }).fail(function (data) {
+            $('.alert').html('Error in delete');
+        });
+    }
+    function edit(stdID, subID) {
+
+    }
+</script>

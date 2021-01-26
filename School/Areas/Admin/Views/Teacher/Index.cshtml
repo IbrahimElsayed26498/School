@@ -14,17 +14,17 @@
 <hr style="width:50%;text-align:left;margin-left:0">
 <br />
 <div id="subject-form">
-    @Html.Action("AddSubjectForm")
+    @Html.Action("AddSubjectForm", controllerName: "Subject")
 </div>
 <hr style="width:50%;text-align:left;margin-left:0">
 <br />
 <div id="student-form">
-    @Html.Action("AddStudentForm")
+    @Html.Action("AddStudentForm", controllerName: "Student")
 </div>
 <hr style="width:50%;text-align:left;margin-left:0">
 <br />
 <div id="student-subject-form">
-    @Html.Action("AddStudentSubjectForm")
+    @Html.Action("AddStudentSubjectForm", controllerName: "StudnetsSubjects")
 </div>
 <div>
     <a href="#subjects">Subjects</a>
@@ -33,7 +33,7 @@
     @Html.Action("Details")
 </div>
 <div id="subjects">
-    @Html.Action("SubjectsDetails")
+    @Html.Action("SubjectsDetails", controllerName: "Subject")
 </div>
 <script>
     function onSuccess(data) {
@@ -72,7 +72,7 @@
     }
     function studentForm() {
         $.ajax({
-            url: "/Admin/teacher/AddStudentForm",
+            url: "/Admin/studnet/AddStudentForm",
             type: "Get"
         }).done(function (data) {
             $("#student-form").html(data);
@@ -81,7 +81,7 @@
     }
     function studentSubjectForm() {
         $.ajax({
-            url: "/Admin/teacher/AddStudentSubjectForm",
+            url: "/Admin/StudnetsSubjects/AddStudentSubjectForm",
             type: "Get"
         }).done(function (data) {
             $("#student-subject-form").html(data);
@@ -90,7 +90,7 @@
     }
     function subjectForm() {
         $.ajax({
-            url: "/Admin/teacher/AddSubjectForm",
+            url: "/Admin/Subject/AddSubjectForm",
             type: "Get"
         }).done(function (data) {
             $("#subject-form").html(data);

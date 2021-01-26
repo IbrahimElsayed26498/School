@@ -1,6 +1,7 @@
 ﻿@model School.ViewModel.StudentSubjectVM
 @{
     string formName = ViewBag.FormName = "AddStudentSubjectForm";
+
 }
 @using (Ajax.BeginForm(formName,
    new AjaxOptions { OnSuccess = "onSuccess", OnFailure = "onFailure" }))
@@ -10,16 +11,16 @@
         @Html.DropDownListFor(z => z.StudentFK,
                      new SelectList(new School.DAL.StudentsDAL().GetAll(),
                      "ID", "Name"),
-                     new { @class = "form-control" })
+                     new { @class = "form-control", id = "StudentFK" })
         @Html.ValidationMessageFor(z => z.StudentFK)
     </div>
     <div class="form-group col-md-4 col-sm-4 col-xs-12">
-        @Html.LabelFor(z => z.SubjectFK, new { @class = "form-label" })
-        @Html.DropDownListFor(z => z.SubjectFK,
-                     new SelectList(new School.DAL.SubjectsDAL().GetAll(),
-                     "ID", "Name"),
-                     new { @class = "form-control" })
-        @Html.ValidationMessageFor(z => z.SubjectFK)
+        <div id="SubjectDiv">
+            <label>Subject</label>
+            <select id="SubjectFK" name="SubjectFK" class="form-control">
+            </select>
+
+        </div>
     </div>
     if (formName == "PostEdit")
     {
@@ -34,3 +35,25 @@
     }
 
 }
+<script>
+    $('#StudentFK').change(function () {
+        BindSubject();
+    })
+    function BindSubject() {
+        $.ajax({
+            url: "/Subject/GetSubjects",
+            method: "Get",
+            data: {
+                id: $('#StudentFK').val()
+            }
+        }).done(function (data) {
+            var rows = "";
+            $.each(data.subjects, function (i, item) {
+                rows += '<option value = "' + item.ID + '">' + item.Name + '</option>'
+            })
+            $('#SubjectFK').html(rows)
+        }).fail(function (data) {
+
+        });
+    }
+</script>

@@ -8,6 +8,10 @@ namespace School.DAL
     public class SubjectsDAL
     {
         SchoolDBEntities _db = new SchoolDBEntities();
+        public SubjectsDAL()
+        {
+            _db.Configuration.ProxyCreationEnabled = false;
+        }
         public bool Add(Subject subject, out string message)
         {
             try

@@ -15,7 +15,7 @@ namespace School.DAL
                 Where(item => item.StudentFK == student.ID).Select(
                 item => new Subject() 
                 {
-                    ID = item.ID, 
+                    ID = item.SubjectFK, 
                     Name = new SubjectsDAL().GetOne(item.SubjectFK).Name
                 }).ToList();
         }
