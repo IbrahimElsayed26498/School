@@ -23,3 +23,29 @@
         </tbody>
     </table>
 }
+<script>
+    function editSubject(id) {
+        $.ajax({
+            url: "/Admin/Subject/Edit",
+            type: "GET",
+            data: {
+                id: id
+            }
+        }).done(function (data) {
+            $('#subject-form').html(data)
+            window.scrollTo(0, 0); 
+        }).fail(function (data) {
+            alert("Error in getting form.")
+        });
+    }
+    function loadSubjects() {
+        $.ajax({
+            url: "/Admin/Subject/SubjectsDetails",
+            type: "GET"
+        }).done(function (data) {
+            $('#subjects').html(data)
+        }).fail(function (data) {
+            alert("Error in getting subjects.")
+        });
+    }
+</script>

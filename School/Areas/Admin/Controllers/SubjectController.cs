@@ -70,5 +70,35 @@ namespace School.Areas.Admin.Controllers
             return Json(new { subjects },
                 JsonRequestBehavior.AllowGet);
         }
+
+        [HttpGet]
+        public PartialViewResult Edit(int id)
+        {
+            var obj = _subjectDAL.GetOne(id);
+            // map Subject to SubjectVM
+            var subjectVM = new SubjectsVM()
+            {
+                ID = obj.ID,
+                Name = obj.Name,
+            };
+            ViewBag.FormName = $"{nameof(Edit)}";
+            return PartialView($"{nameof(AddSubjectForm)}", subjectVM);
+        }
+        [HttpPost]
+        public JsonResult Edit(SubjectsVM subjectsVM)
+        {
+            string message;
+            // map SubjectVM to Subject Object
+            var subject = new Subject()
+            {
+                ID = subjectsVM.ID,
+                Name = subjectsVM.Name,
+            };
+            return Json(new
+            {
+                done = _subjectDAL.Edit(subject, out message),
+                message
+            }, JsonRequestBehavior.AllowGet);
+        }
     }
 }

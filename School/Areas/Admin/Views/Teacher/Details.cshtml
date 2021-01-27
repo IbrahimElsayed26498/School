@@ -81,6 +81,7 @@
             }
         }).done(function (data) {
             $('#teacher-form').html(data)
+            window.scrollTo(0, 0);  // scroll to the top of the page
         }).fail(function (data) {
             alert("Error in getting form.")
         });
