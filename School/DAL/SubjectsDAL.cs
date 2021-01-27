@@ -58,11 +58,11 @@ namespace School.DAL
             }
         }
 
-        public bool Delete(Subject subject, out string message)
+        public bool Delete(int id, out string message)
         {
             try
             {
-                var obj = _db.Subjects.Where(item => item.ID == subject.ID).FirstOrDefault();
+                var obj = _db.Subjects.Where(item => item.ID == id).FirstOrDefault();
                 if (obj != null)
                 {
                     _db.Subjects.Remove(obj);

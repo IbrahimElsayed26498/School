@@ -100,5 +100,15 @@ namespace School.Areas.Admin.Controllers
                 message
             }, JsonRequestBehavior.AllowGet);
         }
+        public JsonResult Delete(int id)
+        {
+            string message;
+            return Json(new 
+            {
+                done = _subjectDAL.Delete(id, out message),
+                message
+            }
+            , JsonRequestBehavior.AllowGet);
+        }
     }
 }

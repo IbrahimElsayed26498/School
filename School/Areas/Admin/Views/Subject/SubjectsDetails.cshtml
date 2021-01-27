@@ -16,7 +16,7 @@
                     <td>@item.Name</td>
                     <td>
                         <button class="btn btn-primary" onclick="editSubject(@item.ID)">Edit</button>
-                        <button class="btn btn-danger" onclick="DeleteSubject(@item.ID)">Delete</button>
+                        <button class="btn btn-danger" onclick="deleteSubject(@item.ID)">Delete</button>
                     </td>
                 </tr>
             }
@@ -36,6 +36,24 @@
             window.scrollTo(0, 0); 
         }).fail(function (data) {
             alert("Error in getting form.")
+        });
+    }
+    function deleteSubject(id) {
+        $.ajax({
+            url: "/Admin/Subject/Delete",
+            type: "Get",
+            data: {
+                id: id
+            }
+        }).done(function (data) {
+            if (data.done) {
+                alert("deleted successfully.")
+            } else {
+                alert("make sure that you've deleted the corresponding studnets first.\n" + data.message)
+            }
+            loadSubjects();
+        }).fail(function (data) {
+            $('.alert').html('Error in delete');
         });
     }
     function loadSubjects() {
