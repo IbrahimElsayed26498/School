@@ -37,8 +37,8 @@
                                                 {
                                                     <li>
                                                         @i.Name
-                                                        <button class="btn btn-danger" onclick="del(@its.Student.ID, @i.ID)">D</button>
-                                                        <button class="btn btn-info" onclick="edit(@its.Student.ID, @i.ID)">E</button>
+                                                        <button class="btn btn-danger" onclick="delStdSub(@its.Student.ID, @i.ID)">D</button>
+                                                        <button class="btn btn-info" onclick="editStdSub(@its.Student.ID, @i.ID)">E</button>
                                                     </li>
                                                 }
                                             </ul>
@@ -99,6 +99,22 @@
             }
         }).done(function (data) {
             $('#student-form').html(data)
+            window.scrollTo(0, 0);  // scroll to the top of the page
+        }).fail(function (data) {
+            alert("Error in getting form.")
+        });
+    }
+    function editStdSub(stdID, subID) {
+        $.ajax({
+            url: "/Admin/StudnetsSubjects/Edit",
+            type: "GET",
+            data: {
+                stdID: stdID,
+                subID: subID
+            }
+        }).done(function (data) {
+            $('#student-subject-form').html(data)
+            BindSubject();
             window.scrollTo(0, 0);  // scroll to the top of the page
         }).fail(function (data) {
             alert("Error in getting form.")

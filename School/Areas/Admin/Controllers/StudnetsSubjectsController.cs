@@ -1,6 +1,7 @@
 ﻿using School.DAL;
 using School.Models;
 using School.ViewModel;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace School.Areas.Admin.Controllers
@@ -16,6 +17,7 @@ namespace School.Areas.Admin.Controllers
         [HttpGet]
         public PartialViewResult AddStudentSubjectForm()
         {
+            ViewBag.FormName = $"{nameof(AddStudentSubjectForm)}";
             return PartialView();
         }
         [HttpPost]
@@ -37,6 +39,37 @@ namespace School.Areas.Admin.Controllers
                 formName = $"{nameof(StudentSubject)}"
             },
                 JsonRequestBehavior.AllowGet);
+        }
+        [HttpGet]
+        public PartialViewResult Edit(int stdID, int subID)
+        {
+            ViewBag.FormName = $"{nameof(PostEdit)}";
+            var obj = _stdSubDAL.GetAll().
+                Where(item => item.StudentFK == stdID && item.SubjectFK == subID).FirstOrDefault();
+
+            var stdSubVM = new StudentSubjectVM()
+            {
+                ID = obj.ID,
+                StudentFK = obj.StudentFK,
+                SubjectFK = obj.SubjectFK
+            };
+            return PartialView($"{nameof(AddStudentSubjectForm)}", stdSubVM);
+        }
+        [HttpPost]
+        public JsonResult PostEdit(StudentSubjectVM stdSubVM)
+        {
+            string message;
+            var stdSub = new StudentSubject()
+            {
+                ID = stdSubVM.ID,
+                StudentFK = stdSubVM.StudentFK,
+                SubjectFK = stdSubVM.SubjectFK,
+            };
+            return Json(new
+            {
+                done = _stdSubDAL.Edit(stdSub, out message),
+                message
+            }, JsonRequestBehavior.AllowGet);
         }
     }
 }
