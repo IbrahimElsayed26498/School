@@ -43,6 +43,7 @@ namespace School.Areas.Admin.Controllers
         [HttpGet]
         public PartialViewResult Edit(int id)
         {
+            ViewBag.FormName = $"{nameof(Edit)}";
             var obj = _studentDAL.GetOne(id);
             var studnetVM = new StudentsVM()
             {
@@ -55,7 +56,6 @@ namespace School.Areas.Admin.Controllers
         [HttpPost]
         public JsonResult Edit(StudentsVM studentsVM)
         {
-            ViewBag.FormName = $"{nameof(Edit)}";
             string message;
             var student = new Student()
             {

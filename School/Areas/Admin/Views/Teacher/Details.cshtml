@@ -27,7 +27,10 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <th>@its.Student.Name</th>
+                                        <th>@its.Student.Name
+                                            <button class="btn btn-info" onclick="editStd(@its.Student.ID)">E</button>
+                                            <button class="btn btn-danger" onclick="delStd(@its.Student.ID)">D</button>
+                                        </th>
                                         <th>
                                             <ul>
                                                 @foreach (var i in its.Subjects)
@@ -81,6 +84,21 @@
             }
         }).done(function (data) {
             $('#teacher-form').html(data)
+            window.scrollTo(0, 0);  // scroll to the top of the page
+        }).fail(function (data) {
+            alert("Error in getting form.")
+        });
+    }
+
+    function editStd(id) {
+        $.ajax({
+            url: "/Admin/Student/Edit",
+            type: "GET",
+            data: {
+                id: id
+            }
+        }).done(function (data) {
+            $('#student-form').html(data)
             window.scrollTo(0, 0);  // scroll to the top of the page
         }).fail(function (data) {
             alert("Error in getting form.")
