@@ -27,7 +27,7 @@ namespace School.Areas.Admin.Controllers
             var stdSub = new StudentSubject()
             {
                 StudentFK = stdSubVM.StudentFK,
-                SubjectFK = stdSubVM.StudentFK
+                SubjectFK = stdSubVM.SubjectFK
             };
 
             return Json(new

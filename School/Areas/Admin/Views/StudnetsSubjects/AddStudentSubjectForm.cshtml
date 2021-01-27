@@ -49,7 +49,9 @@
         }).done(function (data) {
             var rows = "";
             $.each(data.subjects, function (i, item) {
-                rows += '<option value = "' + item.ID + '">' + item.Name + '</option>'
+                if (item != null) {
+                    rows += '<option value = "' + item.ID + '">' + item.Name + '</option>';
+                }
             })
             $('#SubjectFK').html(rows)
         }).fail(function (data) {

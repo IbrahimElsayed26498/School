@@ -49,7 +49,7 @@ namespace School.Areas.Admin.Controllers
         // this Action returns the unselected subjects to the studnet.
         // if a student selected a subject, so he can't select it again.
         [HttpGet]
-        public JsonResult GetSubjects(int id)
+        public JsonResult GetSubjects(int id)// id of the student
         {
             var stdSubs = _stdSubDAL.GetAll().Where(z => z.StudentFK == id).
                 Select(z => z.SubjectFK).ToList(); // get the subjects ids for the students.
