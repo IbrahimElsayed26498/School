@@ -1,6 +1,6 @@
 ﻿@model School.ViewModel.StudentsVM
 @{
-    string formName = ViewBag.FormName = "AddStudentForm";
+    string formName = ViewBag.FormName;
 }
 @using (Ajax.BeginForm(formName,
    new AjaxOptions { OnSuccess = "onSuccess", OnFailure = "onFailure" }))
@@ -18,7 +18,7 @@
                      new { @class = "form-control" })
         @Html.ValidationMessageFor(z => z.TeacherFK)
     </div>
-    if (formName == "PostEdit")
+    if (formName == "Edit")
     {
         @Html.HiddenFor(z => z.ID)
 

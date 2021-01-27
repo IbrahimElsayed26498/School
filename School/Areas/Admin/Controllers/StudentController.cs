@@ -16,6 +16,7 @@ namespace School.Areas.Admin.Controllers
         [HttpGet]
         public PartialViewResult AddStudentForm()
         {
+            ViewBag.FormName = $"{nameof(AddStudentForm)}";
             return PartialView();
         }
         [HttpPost]
@@ -37,6 +38,36 @@ namespace School.Areas.Admin.Controllers
                 formName = $"{nameof(Student)}"
             },
                 JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public PartialViewResult Edit(int id)
+        {
+            var obj = _studentDAL.GetOne(id);
+            var studnetVM = new StudentsVM()
+            {
+                ID = obj.ID,
+                Name = obj.Name,
+                TeacherFK = obj.TeacherFK
+            };
+            return PartialView($"{nameof(AddStudentForm)}", studnetVM);
+        }
+        [HttpPost]
+        public JsonResult Edit(StudentsVM studentsVM)
+        {
+            ViewBag.FormName = $"{nameof(Edit)}";
+            string message;
+            var student = new Student()
+            {
+                ID = studentsVM.ID,
+                Name = studentsVM.Name,
+                TeacherFK = studentsVM.TeacherFK,
+            };
+            return Json(new
+            {
+                done = _studentDAL.Edit(student, out message),
+                message
+            }, JsonRequestBehavior.AllowGet);
         }
     }
 }

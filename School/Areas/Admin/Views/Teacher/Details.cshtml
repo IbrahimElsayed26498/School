@@ -71,4 +71,18 @@
     function edit(stdID, subID) {
 
     }
+
+    function editTeacher(id) {
+        $.ajax({
+            url: "/Admin/Teacher/Edit",
+            type: "GET",
+            data: {
+                id: id
+            }
+        }).done(function (data) {
+            $('#teacher-form').html(data)
+        }).fail(function (data) {
+            alert("Error in getting form.")
+        });
+    }
 </script>
