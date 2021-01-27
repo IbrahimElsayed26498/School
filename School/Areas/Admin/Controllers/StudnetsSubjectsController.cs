@@ -71,5 +71,18 @@ namespace School.Areas.Admin.Controllers
                 message
             }, JsonRequestBehavior.AllowGet);
         }
+
+        public JsonResult Delete(int stdID, int subID)
+        {
+            string message;
+            int id = _stdSubDAL.GetAll().
+                Where(item => item.StudentFK == stdID && item.SubjectFK == subID).
+                FirstOrDefault().ID;
+            return Json(new 
+            { 
+                done = _stdSubDAL.Delete(id, out message),
+                message
+            },JsonRequestBehavior.AllowGet);
+        }
     }
 }

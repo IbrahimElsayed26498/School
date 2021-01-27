@@ -50,7 +50,7 @@
                     </td>
                     <td>
                         <button class="btn btn-primary" onclick="editTeacher(@item.teacher.ID)">Edit</button>
-                        <button class="btn btn-danger" onclick="DeleteTeacher(@item.teacher.ID)">Delete</button>
+                        <button class="btn btn-danger" onclick="deleteTeacher(@item.teacher.ID)">Delete</button>
                     </td>
                 </tr>
             }
@@ -58,23 +58,6 @@
     </table>
 }
 <script>
-    function del(stdID, subID) {
-        $.ajax({
-            url: "/Admin/Teacher/DeleteStudnetSubject",
-            type: "Get",
-            data: {
-                id: id
-            }
-        }).done(function (data) {
-            LoadData();
-        }).fail(function (data) {
-            $('.alert').html('Error in delete');
-        });
-    }
-    function edit(stdID, subID) {
-
-    }
-
     function editTeacher(id) {
         $.ajax({
             url: "/Admin/Teacher/Edit",
@@ -126,6 +109,43 @@
             type: "Get",
             data: {
                 id: id
+            }
+        }).done(function (data) {
+            if (data.done) {
+                alert("deleted successfully.")
+            } else {
+                alert("make sure that you've deleted the corresponding subjects first.\n" + data.message)
+            }
+            loadData();
+        }).fail(function (data) {
+            $('.alert').html('Error in delete');
+        });
+    }
+    function deleteTeacher(id) {
+        $.ajax({
+            url: "/Admin/Teacher/Delete",
+            type: "Get",
+            data: {
+                id: id
+            }
+        }).done(function (data) {
+            if (data.done) {
+                alert("deleted successfully.")
+            } else {
+                alert("make sure that you've deleted the corresponding studnets first.\n" + data.message)
+            }
+            loadData();
+        }).fail(function (data) {
+            $('.alert').html('Error in delete');
+        });
+    }
+    function delStdSub(stdID, subID) {
+        $.ajax({
+            url: "/Admin/StudnetsSubjects/Delete",
+            type: "Get",
+            data: {
+                stdID: stdID,
+                subID: subID
             }
         }).done(function (data) {
             if (data.done) {
