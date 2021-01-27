@@ -120,4 +120,22 @@
             alert("Error in getting form.")
         });
     }
+    function delStd(id) {
+        $.ajax({
+            url: "/Admin/Student/Delete",
+            type: "Get",
+            data: {
+                id: id
+            }
+        }).done(function (data) {
+            if (data.done) {
+                alert("deleted successfully.")
+            } else {
+                alert(data.message)
+            }
+            loadData();
+        }).fail(function (data) {
+            $('.alert').html('Error in delete');
+        });
+    }
 </script>
